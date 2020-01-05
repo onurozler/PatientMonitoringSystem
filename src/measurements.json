@@ -1,0 +1,34 @@
+{
+  "data": [
+    {
+      "vital":
+      {
+        "respiratory" : 32,
+        "cardiovascular" : 127
+      },
+      "digestive": 210,
+      "nervous": 123,
+      "immune": 433
+    },
+    {
+      "vital":
+      {
+        "respiratory" : 22,
+        "cardiovascular" : 43
+      },
+      "digestive": 210,
+      "nervous": 155,
+      "immune": 500
+    },
+    {
+      "vital":
+      {
+        "respiratory" : 15,
+        "cardiovascular" : 35
+      },
+      "digestive": 150,
+      "nervous": 100,
+      "immune": 120
+    }
+  ]
+}
