@@ -1,7 +1,7 @@
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Datum {
+class Measurement implements MeasurementInfo{
 
     @SerializedName("vital")
     @Expose
@@ -16,10 +16,10 @@ public class Datum {
     @Expose
     private Integer immune;
 
-    public Datum() {
+    public Measurement() {
     }
 
-    public Datum(Vital vital, Integer digestive, Integer nervous, Integer immune) {
+    public Measurement(Vital vital, Integer digestive, Integer nervous, Integer immune) {
         super();
         this.vital = vital;
         this.digestive = digestive;
@@ -58,13 +58,24 @@ public class Datum {
     public void setImmune(Integer immune) {
         this.immune = immune;
     }
+
+    public boolean isOutsideOfRange() {
+        return vital.getRespiratory() > 500 || vital.getRespiratory()  < 100 ||
+                vital.getCardiovascular() > 500 || vital.getCardiovascular() < 100 ||
+                digestive > 500 || digestive < 100 ||
+                nervous > 500 || nervous < 100 ||
+                immune > 500 || immune < 100;
+    }
+
     @Override
-    public String toString() {
-        return "Datum{" +
-                "vital=" + vital +
+    public String getInfo() {
+        return "Measurement{" +
+                "cardiovascular =" + vital.getCardiovascular() +
+                ", respiratory=" + vital.getRespiratory() +
                 ", digestive=" + digestive +
                 ", nervous=" + nervous +
                 ", immune=" + immune +
                 '}';
     }
+
 }

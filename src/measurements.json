@@ -3,12 +3,12 @@
     {
       "vital":
       {
-        "respiratory" : 32,
+        "respiratory" : 132,
         "cardiovascular" : 127
       },
       "digestive": 210,
       "nervous": 123,
-      "immune": 433
+      "immune": 111
     },
     {
       "vital":
