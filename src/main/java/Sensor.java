@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-public class Sensor implements Observable<MeasurementInfo>{
+public class Sensor implements Observable<MeasurementInfo>, Iterable<Measurement>{
 
     @SerializedName("data")
     @Expose
@@ -21,8 +21,10 @@ public class Sensor implements Observable<MeasurementInfo>{
     public void start(AlarmDevice alarmDevice)
     {
         new Thread(() -> {
-            for(Measurement datum: data)
-            {
+            Iterator<Measurement> iterator = iterator();
+            while (iterator.hasNext()) {
+                Measurement datum = iterator.next();
+
                 if(datum.isOutsideOfRange())
                 {
                     MeasurementInfo measurementInfo = datum;
@@ -40,6 +42,7 @@ public class Sensor implements Observable<MeasurementInfo>{
                     e.printStackTrace();
                 }
             }
+
         }).start();
 
     }
@@ -67,5 +70,10 @@ public class Sensor implements Observable<MeasurementInfo>{
         for (Observer<MeasurementInfo> observer: observers) {
             observer.update(data);
         }
+    }
+
+    @Override
+    public Iterator<Measurement> iterator() {
+        return new ListIterator<>(data);
     }
 }

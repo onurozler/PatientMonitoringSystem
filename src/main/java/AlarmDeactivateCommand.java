@@ -1,7 +1,7 @@
 public class AlarmDeactivateCommand implements Command {
-    private Alarm alarm;
+    private TargetAlarmAdapter alarm;
 
-    public AlarmDeactivateCommand(Alarm alarm)
+    public AlarmDeactivateCommand(TargetAlarmAdapter alarm)
     {
         this.alarm = alarm;
     }

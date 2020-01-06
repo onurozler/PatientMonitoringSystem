@@ -1,7 +1,7 @@
 public class AlarmActivateCommand implements Command {
-    private Alarm alarm;
+    private IAlarm alarm;
 
-    public AlarmActivateCommand(Alarm alarm)
+    public AlarmActivateCommand(IAlarm alarm)
     {
         this.alarm = alarm;
     }
