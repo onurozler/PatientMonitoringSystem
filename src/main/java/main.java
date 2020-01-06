@@ -6,12 +6,10 @@ class Main {
         AbstractSensorFactory generalElectricFactory = new PhilipsFactory();
 
         Sensor slowPhilipsSensor = philipsFactory.createSlowCensor();
-        System.out.println(slowPhilipsSensor.getData());
         Sensor fastGeSensor = generalElectricFactory.createFastCensor();
 
-        Display display = new Display();
-        slowPhilipsSensor.registerObserver(display);
-        fastGeSensor.registerObserver(display);
+        slowPhilipsSensor.registerObserver(Display.getInstance());
+        fastGeSensor.registerObserver(Display.getInstance());
 
         slowPhilipsSensor.start();
         fastGeSensor.start();
