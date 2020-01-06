@@ -4,12 +4,12 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-public class Sensor implements Observable<Datum>{
+public class Sensor implements Observable<MeasurementInfo>{
 
     @SerializedName("data")
     @Expose
-    private List<Datum> data = null;
-    private ArrayList<Observer<Datum>> observers = new ArrayList ();
+    private List<Measurement> data = null;
+    private ArrayList<Observer<MeasurementInfo>> observers = new ArrayList ();
     private int speed = 0;
 
     public Sensor(){}
@@ -18,12 +18,22 @@ public class Sensor implements Observable<Datum>{
         this.speed = speed;
     }
 
-    public void start()
+    public void start(AlarmDevice alarmDevice)
     {
         new Thread(() -> {
-            for(Datum datum: data)
+            for(Measurement datum: data)
             {
-                notifyObservers(datum);
+                if(datum.isOutsideOfRange())
+                {
+                    MeasurementInfo measurementInfo = datum;
+                    measurementInfo = new ExtremeMeasurement(measurementInfo);
+                    notifyObservers(measurementInfo);
+                    alarmDevice.OnAlarmTriggered();
+                }
+                else
+                    notifyObservers(datum);
+
+
                 try {
                     Thread.sleep((3 - speed) * 1000);
                 } catch (InterruptedException e) {
@@ -34,27 +44,27 @@ public class Sensor implements Observable<Datum>{
 
     }
 
-    public Sensor(List<Datum> data) {
+    public Sensor(List<Measurement> data) {
         super();
         this.data = data;
     }
     public void setSpeed(int speed) {
         this.speed = speed;
     }
-    public List<Datum> getData() {
+    public List<Measurement> getData() {
         return data;
     }
 
-    public void registerObserver(Observer<Datum> observer) {
+    public void registerObserver(Observer<MeasurementInfo> observer) {
         observers.add(observer);
     }
 
-    public void unregisterObserver(Observer<Datum> observer) {
+    public void unregisterObserver(Observer<MeasurementInfo> observer) {
         observers.remove(observer);
     }
 
-    public void notifyObservers(Datum data) {
-        for (Observer<Datum> observer: observers) {
+    public void notifyObservers(MeasurementInfo data) {
+        for (Observer<MeasurementInfo> observer: observers) {
             observer.update(data);
         }
     }

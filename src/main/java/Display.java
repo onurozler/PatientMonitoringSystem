@@ -1,4 +1,4 @@
-public class Display implements Observer<Datum> {
+public class Display implements Observer<MeasurementInfo> {
 
     private static Display instance = null;
 
@@ -11,7 +11,7 @@ public class Display implements Observer<Datum> {
     }
 
     @Override
-    public void update(Datum measurement) {
-        System.out.println(measurement);
+    public void update(MeasurementInfo measurement) {
+        System.out.println(measurement.getInfo());
     }
 }

@@ -11,8 +11,12 @@ class Main {
         slowPhilipsSensor.registerObserver(Display.getInstance());
         fastGeSensor.registerObserver(Display.getInstance());
 
-        slowPhilipsSensor.start();
-        fastGeSensor.start();
+        AlarmDevice alarmDevice = new AlarmDevice();
+        Alarm alarm = new Alarm();
+        alarmDevice.SetActivateCommand(new AlarmActivateCommand(alarm));
+
+        slowPhilipsSensor.start(alarmDevice);
+        fastGeSensor.start(alarmDevice);
 
         while(true);
     }
